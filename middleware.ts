@@ -6,13 +6,13 @@ export default withAuth(
   function middleware(req) {
     console.log(req.nextauth);
     if (
-      req.nextUrl.pathname === "/add" &&
+      req.nextUrl.pathname?.includes === "/project/detail" &&
       req.nextauth.token?.role !== "admin"
     ) {
       return new NextResponse("You are not authorized!");
     }
     if (
-      req.nextUrl.pathname === "/cart" &&
+      req.nextUrl.pathname === "/project/add" &&
       req.nextauth.token?.role !== "admin"
     ) {
       return new NextResponse("You are not authorized!");

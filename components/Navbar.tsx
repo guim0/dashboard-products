@@ -9,15 +9,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import BurgerIcon from "@/public/burger-menu.svg";
 import { useSession } from "next-auth/react";
-import { Button } from "./ui/button";
 import Image from "next/image";
+import { Button } from "./ui/button";
 
 import Link from "next/link";
 import { Skeleton } from "./ui/skeleton";
 
-import { AvatarImage, Avatar } from "./ui/avatar";
-import { Badge } from "./ui/badge";
-import { cartList } from "@/lib/mocked/list";
+import { Avatar, AvatarImage } from "./ui/avatar";
 
 const Navbar = () => {
   const { data, status } = useSession();
@@ -27,10 +25,10 @@ const Navbar = () => {
       <section className="flex justify-between  items-center">
         <div>
           {status === "unauthenticated" ? (
-            <h2 className="text-xl">Welcome!</h2>
+            <h2 className="text-2xl">Gerenciamento de projetos</h2>
           ) : status !== "loading" ? (
             <div className="flex items-center gap-2">
-              <div>Welcome, {data?.user?.name}</div>
+              <div className="text-2xl">Bem vindo, {data?.user?.name}.</div>
               <Avatar>
                 <AvatarImage src={data?.user?.image ?? ""} alt="user" />
               </Avatar>
@@ -59,23 +57,20 @@ const Navbar = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuLabel>Where to go?</DropdownMenuLabel>
+                  <DropdownMenuLabel>Páginas</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   {status === "authenticated" && (
                     <DropdownMenuItem asChild>
-                      <Link href="/add">Register Item</Link>
+                      <Link href="/project/add"> Novo projeto</Link>
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuItem asChild>
-                    <Link href="/">List Items</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="flex align-middle gap-3">
-                    <Link href={"/cart"}>Cart</Link>
+                    <Link href="/">Projetos</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <Button variant="destructive" asChild>
-                      <Link href={"/api/auth/signout"}>Sign out</Link>
+                      <Link href={"/api/auth/signout"}>Sair</Link>
                     </Button>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
