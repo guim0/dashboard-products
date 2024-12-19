@@ -19,39 +19,44 @@ import {
 
 import { Bar, BarChart, XAxis, YAxis } from "recharts";
 
+import { NewProjectModal } from "@/components/NewProjectModal";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ToastAction } from "@/components/ui/toast";
-import { getProjectDetail, IProjects, mockData } from "@/lib/mocked/list";
+import { getCompanyDetails, ICompany, mockCompanies } from "@/lib/mocked/list";
 import { chartConfig } from "@/lib/utils/chartConfigOnCard";
 import Link from "next/link";
 
 export default function ListingPage() {
   const { status } = useSession();
   const { toast } = useToast();
-  const data = mockData;
+  const data = mockCompanies;
 
   const quantityOfProjects = (id: number) => {
-    const dataProject = getProjectDetail(id);
-    return dataProject.length;
+    const dataProject = getCompanyDetails(id);
+    return dataProject?.projects.length;
   };
 
   return (
     <main className="w-full flex flex-col bg-slate-950 h-auto pb-10">
       <section className="flex container flex-wrap gap-8 mt-8">
-        {data.map((items: IProjects) => (
-          <Card key={items.id} className="min-w-[300px] max-w-[600px] w-full">
+        {data.map((items: ICompany) => (
+          <Card
+            key={crypto.randomUUID()}
+            className="min-w-[300px] max-w-[600px] w-full"
+          >
             <CardHeader>
               <CardTitle>{items.company_name}</CardTitle>
               <CardDescription>
-                Projetos desta empresa: {quantityOfProjects(items.id)}
+                Projetos desta empresa: {quantityOfProjects(items.id ?? 0)}
               </CardDescription>
             </CardHeader>
 
             <CardContent>
               <ChartContainer config={chartConfig}>
                 <BarChart
-                  data={items.progress as any}
+                  data={items.projects[0].progress}
                   layout="vertical"
                   margin={{
                     left: -20,
@@ -84,7 +89,14 @@ export default function ListingPage() {
                 <div className="flex gap-2">
                   {status !== "loading" ? (
                     <>
-                      <Button>Criar novo projeto</Button>
+                      <Dialog>
+                        <DialogTrigger disabled={status !== "authenticated"}>
+                          <Button disabled={status !== "authenticated"}>
+                            Criar novo projeto
+                          </Button>
+                        </DialogTrigger>
+                        <NewProjectModal id={items.id ?? 0} />
+                      </Dialog>
                       <Button
                         onClick={() =>
                           status === "unauthenticated"

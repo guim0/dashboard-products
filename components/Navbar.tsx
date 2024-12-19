@@ -61,11 +61,11 @@ const Navbar = () => {
                   <DropdownMenuSeparator />
                   {status === "authenticated" && (
                     <DropdownMenuItem asChild>
-                      <Link href="/project/add"> Novo projeto</Link>
+                      <Link href="/project/add">Novo projeto</Link>
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuItem asChild>
-                    <Link href="/">Projetos</Link>
+                    <Link href="/">Visão Geral</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>

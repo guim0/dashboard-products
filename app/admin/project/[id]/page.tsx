@@ -27,7 +27,7 @@ export default function ProjectDetailPage({
 }) {
   const { status } = useSession();
   const data = getProjectDetail(+`${params?.id}`);
-  console.log(data);
+
   return (
     <main className="w-full flex flex-col bg-slate-950 h-auto pb-10">
       {status === "loading" ? (
