@@ -1,9 +1,9 @@
 "use client";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "@/components/ui/toaster";
 import NextAuthProvider from "@/provider/nextProvider";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +20,7 @@ export default function RootLayout({
             <div>
               <Navbar />
             </div>
-            <section className="grow">{children}</section>
+            <section className="grow bg-slate-950 h-dvh">{children}</section>
           </NextAuthProvider>
         </main>
         <Toaster />

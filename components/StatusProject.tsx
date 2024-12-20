@@ -6,7 +6,7 @@ enum Status {
   Done = "done",
 }
 interface IStatusProject {
-  status: Status;
+  status: Status | string;
 }
 
 export const StatusProject = ({ status }: IStatusProject) => {

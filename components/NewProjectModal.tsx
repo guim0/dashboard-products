@@ -1,14 +1,19 @@
-import { addProjectToCompany, IProject } from "@/lib/mocked/list";
-import { DialogContent } from "@radix-ui/react-dialog";
-import { Controller, useForm } from "react-hook-form";
-import { Button } from "./ui/button";
 import {
-  DialogClose,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "./ui/dialog";
+  addProjectToCompany,
+  getCompanyDetails,
+  IProject,
+} from "@/lib/mocked/list";
+import Link from "next/link";
+import { Controller, useForm } from "react-hook-form";
+import {
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "./ui/alert-dialog";
+import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {
   Select,
@@ -18,6 +23,8 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Textarea } from "./ui/textarea";
+import { ToastAction } from "./ui/toast";
+import { useToast } from "./ui/use-toast";
 
 interface INewProjectForm {
   projectName: string;
@@ -28,6 +35,7 @@ interface INewProjectForm {
 }
 
 export const NewProjectModal = ({ id }: { id: number }) => {
+  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -37,20 +45,31 @@ export const NewProjectModal = ({ id }: { id: number }) => {
   } = useForm<INewProjectForm>();
 
   const startDate = watch("startDate");
-
+  const { company_name } = getCompanyDetails(id);
   const onSubmit = (data: IProject) => {
     addProjectToCompany(id, data);
     console.log("Projeto criado:", data);
+
+    toast({
+      title: `Projeto: ${data.project_name} Criado com sucesso! ✅`,
+      description: `Clique abaixo para acessar os projetos de ${company_name}`,
+      action: (
+        <ToastAction altText="Log in" asChild>
+          <Link href={"/api/auth/signin"}>Log in</Link>
+        </ToastAction>
+      ),
+      duration: 13000,
+    });
   };
 
   return (
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Crie seu novo projeto</DialogTitle>
-        <DialogDescription>
+    <AlertDialogContent className="py-6">
+      <AlertDialogHeader>
+        <AlertDialogTitle>Crie seu novo projeto</AlertDialogTitle>
+        <AlertDialogDescription>
           Preencha os campos abaixo para criar um novo projeto.
-        </DialogDescription>
-      </DialogHeader>
+        </AlertDialogDescription>
+      </AlertDialogHeader>
 
       <form
         onSubmit={handleSubmit(onSubmit as any)}
@@ -165,13 +184,13 @@ export const NewProjectModal = ({ id }: { id: number }) => {
           )}
         </div>
 
-        <DialogFooter className="flex justify-end gap-2">
+        <AlertDialogFooter className="flex justify-end gap-2">
           <Button type="submit">Criar novo Projeto</Button>
-          <DialogClose className="bg-red-300 text-red-600 font-bold hover:bg-red-400 hover:text-red-700">
+          <AlertDialogCancel className="bg-red-300 text-red-600 font-bold hover:bg-red-400 hover:text-red-700">
             Cancelar
-          </DialogClose>
-        </DialogFooter>
+          </AlertDialogCancel>
+        </AlertDialogFooter>
       </form>
-    </DialogContent>
+    </AlertDialogContent>
   );
 };

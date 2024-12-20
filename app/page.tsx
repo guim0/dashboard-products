@@ -20,8 +20,8 @@ import {
 import { Bar, BarChart, XAxis, YAxis } from "recharts";
 
 import { NewProjectModal } from "@/components/NewProjectModal";
+import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ToastAction } from "@/components/ui/toast";
 import { getCompanyDetails, ICompany, mockCompanies } from "@/lib/mocked/list";
@@ -89,14 +89,16 @@ export default function ListingPage() {
                 <div className="flex gap-2">
                   {status !== "loading" ? (
                     <>
-                      <Dialog>
-                        <DialogTrigger disabled={status !== "authenticated"}>
+                      <AlertDialog>
+                        <AlertDialogTrigger
+                          disabled={status !== "authenticated"}
+                        >
                           <Button disabled={status !== "authenticated"}>
                             Criar novo projeto
                           </Button>
-                        </DialogTrigger>
+                        </AlertDialogTrigger>
                         <NewProjectModal id={items.id ?? 0} />
-                      </Dialog>
+                      </AlertDialog>
                       <Button
                         onClick={() =>
                           status === "unauthenticated"

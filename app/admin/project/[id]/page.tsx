@@ -14,10 +14,11 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getProjectDetail } from "@/lib/mocked/list";
+import { getCompanyDetails } from "@/lib/mocked/list";
 import { chartConfig } from "@/lib/utils/chartConfigOnCard";
 
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { Bar, BarChart, XAxis, YAxis } from "recharts";
 
 export default function ProjectDetailPage({
@@ -26,7 +27,9 @@ export default function ProjectDetailPage({
   params: { id: number };
 }) {
   const { status } = useSession();
-  const data = getProjectDetail(+`${params?.id}`);
+  const data = getCompanyDetails(+`${params?.id}`);
+
+  console.log(data);
 
   return (
     <main className="w-full flex flex-col bg-slate-950 h-auto pb-10">
@@ -41,8 +44,11 @@ export default function ProjectDetailPage({
         </section>
       ) : (
         <>
+          <Link href={"/"} className="text-5xl text-white px-3 mt-3 font-light">
+            {" < "}
+          </Link>
           <section className="flex container flex-wrap gap-8 mt-8">
-            {data.map((items) => (
+            {data?.projects.map((items) => (
               <Card
                 key={items.id}
                 className="min-w-[300px] max-w-[600px] w-full"
@@ -51,7 +57,7 @@ export default function ProjectDetailPage({
                   <CardTitle>{items.project_name}</CardTitle>
                   <CardDescription>
                     <div className="flex justify-between ">
-                      Manager: Ayrton Senna
+                      Manager: {items.manager}
                       <div className="flex flex-col items-center">
                         <span>Status do projeto</span>
                         <StatusProject status={items.detail.status} />
