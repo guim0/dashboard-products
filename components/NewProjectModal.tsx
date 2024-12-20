@@ -48,8 +48,6 @@ export const NewProjectModal = ({ id }: { id: number }) => {
   const { company_name } = getCompanyDetails(id);
   const onSubmit = (data: IProject) => {
     addProjectToCompany(id, data);
-    console.log("Projeto criado:", data);
-
     toast({
       title: `Projeto: ${data.project_name} Criado com sucesso! ✅`,
       description: `Clique abaixo para acessar os projetos de ${company_name}`,

@@ -90,7 +90,6 @@ function generateMockData(numCompanies: number, projectsPerCompany: number) {
       progress?: { month: string; desktop: number; mobile: number }[];
     }
   ) => {
-    console.log(newProject);
     const company = mockCompanies.find((comp) => comp.id === companyId);
     if (!company) {
       console.error(`No company found with ID: ${companyId}`);
