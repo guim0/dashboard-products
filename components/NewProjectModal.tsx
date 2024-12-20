@@ -49,11 +49,11 @@ export const NewProjectModal = ({ id }: { id: number }) => {
   const onSubmit = (data: IProject) => {
     addProjectToCompany(id, data);
     toast({
-      title: `Projeto: ${data.project_name} Criado com sucesso! ✅`,
+      title: ` Novo Projeto Criado com sucesso! ✅`,
       description: `Clique abaixo para acessar os projetos de ${company_name}`,
       action: (
-        <ToastAction altText="Log in" asChild>
-          <Link href={"/api/auth/signin"}>Log in</Link>
+        <ToastAction altText="Check in" asChild>
+          <Link href={`/admin/page/${id}`}>Acessar</Link>
         </ToastAction>
       ),
       duration: 13000,
