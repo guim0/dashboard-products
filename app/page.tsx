@@ -84,9 +84,9 @@ export default function ListingPage() {
               </ChartContainer>
             </CardContent>
             <CardFooter>
-              <div className="flex justify-between w-full">
+              <div className="flex-col justify-center  md:flex ">
                 Powered by @
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2 md:flex-row md:items-center ">
                   {status !== "loading" ? (
                     <>
                       <AlertDialog>
@@ -100,6 +100,7 @@ export default function ListingPage() {
                         <NewProjectModal id={items.id ?? 0} />
                       </AlertDialog>
                       <Button
+                        className="max-w-[155px] mx-auto"
                         onClick={() =>
                           status === "unauthenticated"
                             ? toast({
