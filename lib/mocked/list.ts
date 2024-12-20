@@ -84,12 +84,7 @@ function generateMockData(numCompanies: number, projectsPerCompany: number) {
     });
   }
 
-  const addProjectToCompany = (
-    companyId: number,
-    newProject: Omit<IProject, "id" | "progress"> & {
-      progress?: { month: string; desktop: number; mobile: number }[];
-    }
-  ) => {
+  const addProjectToCompany = (companyId: number, newProject: any) => {
     const company = mockCompanies.find((comp) => comp.id === companyId);
     if (!company) {
       console.error(`No company found with ID: ${companyId}`);
@@ -114,11 +109,11 @@ function generateMockData(numCompanies: number, projectsPerCompany: number) {
 
     const projectWithId: IProject = {
       id: companyId,
-      manager: newProject.manager,
-      start_date: newProject.start_date,
-      end_date: newProject.end_date,
+      manager: newProject.responsible,
+      start_date: newProject.startDate,
+      end_date: newProject.endDate,
       description: newProject.description,
-      project_name: newProject.project_name,
+      project_name: newProject.projectName,
       progress,
       detail: {
         status: "active",
