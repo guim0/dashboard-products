@@ -53,7 +53,7 @@ export const NewProjectModal = ({ id }: { id: number }) => {
       description: `Clique abaixo para acessar os projetos de ${company_name}`,
       action: (
         <ToastAction altText="Check in" asChild>
-          <Link href={`/admin/page/${id}`}>Acessar</Link>
+          <Link href={`/admin/project/${id}`}>Acessar</Link>
         </ToastAction>
       ),
       duration: 13000,
